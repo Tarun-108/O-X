@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@drawable/bg">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text=" OX "
+        android:textColor="#B163D8"
+        android:textSize="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="220dp"
+        android:layout_height="172dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/rpgif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="346dp"
+        android:layout_height="162dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gifImageView">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Please enter your details to Login"
+            android:textColor="#D10D0D"
+            android:textSize="22dp"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="285dp" />
+
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Enter your Email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="119dp"
+            tools:layout_editor_absoluteY="449dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="Enter your password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="113dp"
+            tools:layout_editor_absoluteY="511dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=" Not registered yet ? \n       Register here"
+        android:textColor="#1068EC"
+        android:onClick="back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text=" Login "
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#E13A3A"
+        app:cornerRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:strokeColor="#D33333" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

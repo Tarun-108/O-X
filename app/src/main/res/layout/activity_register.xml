@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:background="@drawable/bg">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text=" OX "
+        android:textColor="#B163D8"
+        android:textSize="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="147dp"
+        android:layout_height="123dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/rpgif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gifImageView">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please enter your details to register and continue"
+            android:textColor="#D5EA204F"
+            android:textSize="16dp"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="285dp" />
+
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:layout_marginTop="10dp"
+            android:hint="Enter your name / Username"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="108dp"
+            tools:layout_editor_absoluteY="350dp" />
+
+        <EditText
+            android:id="@+id/editTextEmailAddress"
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Enter your Email"
+            android:textColorHint="@color/black"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteX="119dp"
+            tools:layout_editor_absoluteY="449dp" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="Enter your password"
+            android:textColorHint="@color/black"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="113dp"
+            tools:layout_editor_absoluteY="511dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=" Already registered ? \n          Login here"
+        android:textColor="#1068EC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:shadowColor="#CD2D2D"
+        android:text=" Register "
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#E13A3A"
+        app:cornerRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:strokeColor="#D33333" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="          Or\n Register with"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
