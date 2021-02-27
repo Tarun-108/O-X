@@ -13,7 +13,6 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text=" OX "
         android:textColor="#EF0C39"
@@ -26,7 +25,7 @@
         android:id="@+id/gifImageView"
         android:layout_width="145dp"
         android:layout_height="114dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:src="@drawable/rpgif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +35,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -57,42 +56,44 @@
 
         <EditText
             android:id="@+id/editTextName"
-            android:layout_width="238dp"
+            android:layout_width="281dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="Username"
+            android:textColor="@color/black"
             android:inputType="textPersonName"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="350dp"
-        />
+            tools:layout_editor_absoluteY="350dp" />
 
         <EditText
             android:id="@+id/editTextEmailAddress"
-            android:layout_width="237dp"
+            android:layout_width="281dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="119dp"
-            tools:layout_editor_absoluteY="449dp"/>
+            tools:layout_editor_absoluteY="449dp" />
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:layout_width="237dp"
+            android:layout_width="281dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="113dp"
-            tools:layout_editor_absoluteY="511dp"/>
+            tools:layout_editor_absoluteY="511dp" />
 
     </LinearLayout>
 
@@ -100,11 +101,12 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text=" Already registered ? \n          Login here"
         android:textColor="#1068EC"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintHorizontal_bias="0.988"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -112,7 +114,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:shadowColor="#CD2D2D"
         android:text=" Register "
         android:textColor="#FFFFFF"
@@ -138,36 +140,36 @@
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="12dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <Button
             android:id="@+id/facebook_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="54dp"
             android:layout_marginRight="5dp"
             android:drawableLeft="@drawable/ic_facebook"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="Facebook"
+            android:textColor="#ffffff"
             app:backgroundTint="#264ACD"
             app:cornerRadius="10dp" />
 
         <Button
             android:id="@+id/google_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="153dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="30dp"
             android:drawableLeft="@drawable/ic_google_symbol"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -179,6 +181,19 @@
             app:cornerRadius="10dp" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
