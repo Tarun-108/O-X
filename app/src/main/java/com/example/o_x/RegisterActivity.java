@@ -81,7 +81,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this,"Registration Complete", Toast.LENGTH_SHORT);
+                            binding.progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(RegisterActivity.this,"Registration Complete", Toast.LENGTH_LONG);
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));  // Error might be in this line but i don't know my mistake.
                             finish();
                         }else{
