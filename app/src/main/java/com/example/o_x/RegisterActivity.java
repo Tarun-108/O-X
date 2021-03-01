@@ -46,6 +46,14 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
 
+        binding.tvToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                finish();
+            }
+        });
+
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if(TextUtils.isEmpty(binding.editTextName.getText()) ){
-                    binding.editTextName.setError("Username Required");
+                    binding.editTextName.setError("Enter Your Name");
                     return;
                 }
 
@@ -75,18 +83,18 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 //Registering user
-
                 Auth.createUserWithEmailAndPassword(binding.editTextEmailAddress.getText().toString().trim()
                         ,binding.editTextPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             binding.progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(RegisterActivity.this,"Registration Complete", Toast.LENGTH_LONG);
+                            Toast.makeText(RegisterActivity.this,"Registration Complete", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));  // Error might be in this line but i don't know my mistake.
                             finish();
                         }else{
-                            Toast.makeText(RegisterActivity.this,"Error! "+ task.getException().getMessage(),Toast.LENGTH_SHORT);
+                            binding.progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(RegisterActivity.this,"Error! "+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -95,10 +103,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
     public void hidesoftkeyboard(View view) {
 
         InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
