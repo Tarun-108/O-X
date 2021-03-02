@@ -15,13 +15,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.o_x.databinding.ActivityRegisterBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,11 +41,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     ActivityRegisterBinding binding;
 
-    private FirebaseAuth Auth;
-    private FirebaseDatabase database;
-    private FirebaseFirestore db;
+    private FirebaseAuth Auth = FirebaseAuth.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID;
+    private GoogleSignInClient mGoogleSignInClient;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = Auth.getCurrentUser();
+        if(currentUser != null){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +65,23 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Auth = FirebaseAuth.getInstance();
-        database =  FirebaseDatabase.getInstance();
-        db = FirebaseFirestore.getInstance();
 
-        FirebaseUser currentUser = Auth.getCurrentUser();
-        if(currentUser != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
-        }
+        //creating a request for email to be sent to google
+        request();
 
         binding.tvToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                 finish();
+            }
+        });
+
+        binding.googleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+
             }
         });
 
@@ -83,8 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(binding.editTextEmailAddress.getText().toString().trim())){
-                    binding.editTextEmailAddress.setError("Email Required");
+                if(TextUtils.isEmpty(binding.editTextEmailAddress.getText().toString().trim())
+                        && binding.editTextEmailAddress.getText().toString().trim().contains("@gmail.com")){
+                    binding.editTextEmailAddress.setError("Valid Email Required");
                     binding.progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
@@ -139,6 +160,87 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, 1802);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1802){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d("pass", "firebaseAuthWithGoogle:" + account.getId());
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException error) {
+                Log.d("fail", error.getMessage());
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        Auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = Auth.getCurrentUser();
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));  // Error might be in this line but i don't know my mistake.
+                            finish();
+                            saveData();
+                        } else {
+                            Log.d("fail_to_Auth", "e "+task.getException().getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void saveData() {
+        GoogleSignInAccount user = GoogleSignIn.getLastSignedInAccount(this);
+        if (user != null) {
+            String name = user.getDisplayName();
+            String Email =user.getEmail();
+            uID = Auth.getCurrentUser().getUid();
+            DocumentReference documentReference = db.collection("users").document(uID);
+            Map<String,Object> User = new HashMap<>();
+            User.put("Name", name);
+            User.put("Email",Email);
+            documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("Pass","User's Data stored");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("failToStoreData","Fail "+e.getMessage());
+                }
+                });
+        }
+
+
+
+    }
+
+
+    private void request(){
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+
+    }
+
+
+
+
     public void hidesoftkeyboard(View view) {
 
         InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
