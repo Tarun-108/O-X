@@ -47,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     String uID;
     private GoogleSignInClient mGoogleSignInClient;
 
+    //checking for whether the user is already registered or not
     @Override
     protected void onStart() {
         super.onStart();
@@ -57,11 +58,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    // main fxn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //creating binding object
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -69,6 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
         //creating a request for email to be sent to google
         request();
 
+        //Switch to login activity
         binding.tvToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //button for google registration
         binding.googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //button for email password registration
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,9 +232,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
     private void request(){
-        // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -237,9 +241,6 @@ public class RegisterActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
 
     }
-
-
-
 
     public void hidesoftkeyboard(View view) {
 
