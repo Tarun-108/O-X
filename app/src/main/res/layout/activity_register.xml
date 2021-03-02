@@ -9,7 +9,7 @@
     android:onClick="hidesoftkeyboard">
 
 
-    <TextView
+    <!--<TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,16 +20,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        -->
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="145dp"
         android:layout_height="114dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="72dp"
         android:src="@drawable/rpgif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -133,6 +134,7 @@
         android:layout_marginTop="16dp"
         android:text="          Or\n Register with"
         android:textColor="@color/black"
+        android:visibility="invisible"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -146,6 +148,7 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -184,12 +187,12 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"

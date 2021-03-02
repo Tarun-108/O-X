@@ -8,6 +8,7 @@
     android:background="@drawable/bg"
     android:onClick="hidesoftkeyboard">
 
+    <!--
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -19,16 +20,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        -->
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="199dp"
         android:layout_height="144dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="84dp"
         android:src="@drawable/rpgif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -118,6 +120,7 @@
         android:text="          Or\n Continue with"
         android:textColor="@color/black"
         android:textSize="20dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,6 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
+        android:visibility="invisible"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

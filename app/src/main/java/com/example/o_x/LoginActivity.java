@@ -81,10 +81,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(binding.editTextEmailAddress.getText().toString().trim())){
                     binding.editTextEmailAddress.setError("Email Required");
+                    binding.progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
                 if(TextUtils.isEmpty(binding.editTextTextPassword.getText().toString())){
                     binding.editTextTextPassword.setError("Enter Password");
+                    binding.progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
