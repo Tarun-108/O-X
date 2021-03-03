@@ -1,14 +1,15 @@
 package com.example.o_x;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+// <a href='https://pngtree.com/free-backgrounds'>free background photos from pngtree.com</a>
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,17 +17,43 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getSupportActionBar().show();
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
 
+
+        BottomNavigationView bottomnav = findViewById(R.id.navigation_dashboard);
+        bottomnav.setOnNavigationItemSelectedListener(navlistener);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new BlogFragment()).commit();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navlistener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch(item.getItemId()){
+                        case R.id.navigation_home:
+                            selectedFragment = new HomeFragment();
+                            break;
+                        case R.id.navigation_blog:
+                            selectedFragment = new BlogFragment();
+                            break;
+                        case R.id.navigation_notifications:
+                            selectedFragment = new NotificationFragment();
+                            break;
+                        case R.id.navigation_profile:
+                            selectedFragment = new ProfileFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment).commit();
+
+                    return true;
+                }
+            };
 
 
 

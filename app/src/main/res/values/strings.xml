@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">O-X</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_blog">Blog</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="facebook_app_id">936649693825336</string>
+    <string name="fb_login_protocol_scheme">fb936649693825336</string>
 </resources>
