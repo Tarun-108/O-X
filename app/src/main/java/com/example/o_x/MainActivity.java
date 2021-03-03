@@ -20,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        BottomNavigationView bottomnav = findViewById(R.id.navigation_dashboard);
+        BottomNavigationView bottomnav = findViewById(R.id.nav_view);
         bottomnav.setOnNavigationItemSelectedListener(navlistener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new BlogFragment()).commit();
+                new HomeFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navlistener =
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ProfileFragment();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
 
                     return true;
