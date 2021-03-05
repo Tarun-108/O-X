@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if(TextUtils.isEmpty(binding.editTextEmailAddress.getText().toString().trim())
-                        && binding.editTextEmailAddress.getText().toString().trim().contains("@gmail.com")){
+                        || binding.editTextEmailAddress.getText().toString().trim().contains("@gmail.com") != true){
                     binding.editTextEmailAddress.setError("Valid Email Required");
                     binding.progressBar.setVisibility(View.INVISIBLE);
                     return;
