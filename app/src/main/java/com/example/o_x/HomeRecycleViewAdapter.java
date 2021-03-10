@@ -1,27 +1,25 @@
 package com.example.o_x;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class recycleViewAdapter extends RecyclerView.Adapter<recycleViewAdapter.ViewHolder> {
+public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleViewAdapter.ViewHolder> {
 
     public static final String tag = "Recycle View Adapter";
 
     private String[] namesUsers;
-    private Context mContext;
+    //private Context mContext;
 
-    public recycleViewAdapter(String[] namesUsers, Context mContext) {
+    public HomeRecycleViewAdapter(String[] namesUsers) {
         this.namesUsers = namesUsers;
-        this.mContext = mContext;
+        //this.mContext = mContext;
     }
 
 
@@ -49,7 +47,7 @@ public class recycleViewAdapter extends RecyclerView.Adapter<recycleViewAdapter.
         TextView nameOf;
         CardView card;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.users_pic);
             nameOf = itemView.findViewById(R.id.users_name);

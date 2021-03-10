@@ -8,12 +8,10 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
+        android:id="@+id/usersList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="114dp"
         tools:layout_editor_absoluteX="36dp"
         tools:layout_editor_absoluteY="155dp" />
 

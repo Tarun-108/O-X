@@ -2,6 +2,7 @@ package com.example.o_x;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -214,13 +215,13 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             String name = user.getDisplayName();
             String Email =user.getEmail();
-            //Uri picsrc = user.getPhotoUrl();
+            Uri picsrc = user.getPhotoUrl();
             uID = mAuth.getCurrentUser().getUid();
             DocumentReference documentReference = db.collection("users").document(uID);
             Map<String,Object> User = new HashMap<>();
             User.put("Name", name);
             User.put("Email",Email);
-            //User.put("Photo",picsrc);
+            User.put("Photo",picsrc.toString());
             documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

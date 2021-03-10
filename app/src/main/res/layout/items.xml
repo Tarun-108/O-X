@@ -16,7 +16,7 @@
             android:id="@+id/users_pic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_profile_pic_100" />
+            android:src="@drawable/ic_profile_24" />
 
         <TextView
             android:id="@+id/users_name"
@@ -37,7 +37,7 @@
             android:backgroundTint="#16CCBD"
             android:layout_marginTop="25dp"
             android:text="Send Request"
-            android:layout_marginStart="60dp"/>
+            android:layout_marginStart="20dp"/>
 
     </RelativeLayout>
 

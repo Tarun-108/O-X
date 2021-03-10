@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Please enter your details to register and continue"
-            android:textColor="#F10A2D"
+            android:textColor="@color/Red"
             android:textSize="16dp"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="285dp" />
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text=" Already registered ? \n          Login here"
-        android:textColor="#1068EC"
+        android:textColor="@color/link_color"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.988"
@@ -118,16 +118,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:shadowColor="#CD2D2D"
         android:text=" Register "
         android:textColor="#FFFFFF"
-        app:backgroundTint="#E31414"
+        app:backgroundTint="@color/Red"
         app:cornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:strokeColor="#D33333" />
+        app:strokeColor="@color/Red" />
 
     <TextView
         android:id="@+id/textView4"

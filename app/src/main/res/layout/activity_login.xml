@@ -50,8 +50,8 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:text="Please enter your details to Login"
-            android:textColor="#D10D0D"
-            android:textSize="22dp"
+            android:textColor="@color/Red"
+            android:textSize="20dp"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="285dp" />
 
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text=" New User?  Register here"
-        android:textColor="#102DEC"
+        android:textColor="@color/link_color"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -106,13 +106,13 @@
         android:layout_marginTop="24dp"
         android:text=" Login "
         android:textColor="#FFFFFF"
-        app:backgroundTint="#E13A3A"
+        app:backgroundTint="@color/Red"
         app:cornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:strokeColor="#D33333" />
+        app:strokeColor="@color/Red" />
 
     <TextView
         android:id="@+id/textView4"
@@ -189,7 +189,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        android:textColor="#102DEC"
+        android:textColor="@color/link_color"
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.963"

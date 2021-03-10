@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/design_default_color_secondary"
+    app:cardCornerRadius="30dp"
+    android:layout_margin="5dp"
+    android:id="@+id/blog_card">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/blog_title"
+            android:ems="10"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/Red"
+            android:textSize="36sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/blog_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingBottom="40dp"
+            android:text="Body of blog"
+            android:textColor="@color/black"
+            android:layout_alignTop="@+id/blog_title"
+            android:layout_marginTop="55dp"
+            android:ems="24"/>
+        <TextView
+            android:id="@+id/written_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:text="written by"
+            android:textColor="@color/link_color"
+            android:layout_alignBottom="@+id/blog_body"
+            android:layout_alignEnd="@+id/blog_title"/>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
