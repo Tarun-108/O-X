@@ -171,6 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
                             );
                             if(!vUser.isEmailVerified()){
                                 Toast.makeText(RegisterActivity.this, "Please verify your email to continue", Toast.LENGTH_SHORT).show();
+                                binding.textViewTitle.setVisibility(View.VISIBLE);
                                 return;
                             }else{
                                  startActivity(new Intent(getApplicationContext(),MainActivity.class));

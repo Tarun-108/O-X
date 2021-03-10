@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    app:cardCornerRadius="30dp"
+    android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tVCard_name"
-            android:layout_width="wrap_content"
-            android:textSize="20dp"
-            android:layout_height="wrap_content"
-            android:text="Name"/>
-        <TextView
-            android:id="@+id/tVCard_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="email"/>
+        android:layout_height="wrap_content"
+        android:background="#66D52A">
 
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/users_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_profile_pic_100" />
+
+        <TextView
+            android:id="@+id/users_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="14"
+            android:text="Name"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_alignLeft="@+id/users_pic"
+            android:layout_marginLeft="110dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/users_name"
+            android:layout_alignStart="@+id/users_name"
+            android:backgroundTint="#16CCBD"
+            android:layout_marginTop="25dp"
+            android:text="Send Request"
+            android:layout_marginStart="60dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

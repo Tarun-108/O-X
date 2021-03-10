@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -19,7 +20,7 @@ public class ProfileFragment extends Fragment {
 
 
     View view;
-
+    ImageView profilePic;
     TextView name,email;
 
     private FirebaseAuth auth;
@@ -30,7 +31,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseFirestore.getInstance();
@@ -39,6 +40,7 @@ public class ProfileFragment extends Fragment {
 
         name = (TextView) view.findViewById(R.id.tvName);
         email = (TextView) view.findViewById(R.id.tvEmail);
+        profilePic = (ImageView) view.findViewById(R.id.profilePic);
 
         DocumentReference docRef = storage.collection("users").document(uID);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
