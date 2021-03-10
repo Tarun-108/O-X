@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,19 +9,22 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/blog_container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="275dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/write_blog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blog_back"
         android:orientation="vertical"
         android:padding="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -36,6 +38,7 @@
             android:textSize="20sp" />
 
         <EditText
+            android:id="@+id/editTextTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Title"
@@ -43,16 +46,49 @@
             android:textColorHint="@color/black" />
 
         <EditText
+            android:id="@+id/editTextBody"
             android:layout_width="match_parent"
             android:layout_height="136dp"
             android:hint="Body of blog"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"/>
-        <Button
+            android:textColorHint="@color/black" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Post"
-            android:backgroundTint="@color/link_color"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/post_blog_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/link_color"
+                android:text="Post"/>
+
+            <Button
+                android:id="@+id/cancel_blog_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/Red"
+                android:text="Cancel"
+                android:layout_marginLeft="50dp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/to_write"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="What is in your mind?"
+        android:textColor="@color/purple_500"
+        android:textSize="26sp"
+        android:background="@color/blog_back"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
