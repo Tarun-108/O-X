@@ -8,19 +8,19 @@
     android:background="@drawable/bg"
     android:onClick="hidesoftkeyboard">
 
-    <!--
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewTitle"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text=" OX "
-        android:textColor="#F3061B"
-        android:textSize="64dp"
+        android:text=" Email verification pending\n If verified try to login"
+        android:textColor="#EF0C39"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-        -->
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"

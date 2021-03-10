@@ -48,9 +48,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if(currentUser != null && currentUser.isEmailVerified()){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
+        }
+
+        if(currentUser != null && !currentUser.isEmailVerified()){
+            binding.textViewTitle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -141,8 +145,14 @@ public class LoginActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this,"Logged in successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            finish();
+                            FirebaseUser User = mAuth.getCurrentUser();
+                            if(User.isEmailVerified()){
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                finish();
+                            }else{
+                                binding.textViewTitle.setVisibility(View.VISIBLE);
+                                return;
+                            }
                         }else {
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -204,11 +214,13 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             String name = user.getDisplayName();
             String Email =user.getEmail();
+            //Uri picsrc = user.getPhotoUrl();
             uID = mAuth.getCurrentUser().getUid();
             DocumentReference documentReference = db.collection("users").document(uID);
             Map<String,Object> User = new HashMap<>();
             User.put("Name", name);
             User.put("Email",Email);
+            //User.put("Photo",picsrc);
             documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

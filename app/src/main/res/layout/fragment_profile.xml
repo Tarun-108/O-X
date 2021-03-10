@@ -7,7 +7,7 @@
     android:background="@drawable/back">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/profilePic"
         android:layout_width="136dp"
         android:layout_height="148dp"
         android:layout_marginStart="44dp"
@@ -17,47 +17,44 @@
         app:layout_constraintVertical_bias="0.109" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="28dp"
         android:ems="8"
-        android:padding="10dp"
-        android:text="TextView"
-        android:textSize="20dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/profilePic"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:ems="8"
-        android:padding="10dp"
-        android:text="TextView"
-        android:textSize="20dp"
+        android:ems="20"
+        android:textSize="9dp"
+        android:paddingLeft="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/profilePic"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="8dp"
-        android:text="Logout"
         android:backgroundTint="#ED1174"
+        android:text="Logout"
+        android:onClick="signOut"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/profilePic"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -83,7 +80,7 @@
             android:id="@+id/tvPlayed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_aligntop="@+id/stat_head"
+            android:layout_alignTop="@+id/stat_head"
             android:layout_marginTop="75dp"
             android:text="Matches played"
             android:textColor="@color/black"
@@ -94,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tvPlayed"
-            android:layout_aligntop="@+id/stat_head"
+            android:layout_alignTop="@+id/stat_head"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="75dp"
             android:text="Matches Won"

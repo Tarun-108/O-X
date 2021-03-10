@@ -8,11 +8,13 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="155dp" />
 
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom=""
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="231dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

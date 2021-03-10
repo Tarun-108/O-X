@@ -50,9 +50,13 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = Auth.getCurrentUser();
-        if(currentUser != null){
+        if(currentUser != null && currentUser.isEmailVerified()){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
+        }
+
+       if(currentUser != null && !currentUser.isEmailVerified()){
+          binding.textViewTitle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -132,6 +136,20 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+
+                            FirebaseUser vUser = Auth.getCurrentUser();
+                            vUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(RegisterActivity.this, "Verification Email has been sent", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("onFailure",""+e.getMessage());
+                                }
+                            });
+
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(RegisterActivity.this,"Registration Complete", Toast.LENGTH_SHORT).show();
                             uID = Auth.getCurrentUser().getUid();
@@ -151,8 +169,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }
                             );
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));  // Error might be in this line but i don't know my mistake.
-                            finish();
+                            if(!vUser.isEmailVerified()){
+                                Toast.makeText(RegisterActivity.this, "Please verify your email to continue", Toast.LENGTH_SHORT).show();
+                                return;
+                            }else{
+                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                 finish();
+                            }
                         }else{
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(RegisterActivity.this,"Error! "+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
@@ -162,11 +185,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
 
     }
 
@@ -197,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             binding.progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(RegisterActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = Auth.getCurrentUser();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));  // Error might be in this line but i don't know my mistake.
                             finish();
@@ -214,11 +232,13 @@ public class RegisterActivity extends AppCompatActivity {
         if (user != null) {
             String name = user.getDisplayName();
             String Email =user.getEmail();
+            //Uri picsrc = user.getPhotoUrl();
             uID = Auth.getCurrentUser().getUid();
             DocumentReference documentReference = db.collection("users").document(uID);
             Map<String,Object> User = new HashMap<>();
             User.put("Name", name);
             User.put("Email",Email);
+            //User.put("Photo",picsrc);
             documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
