@@ -39,7 +39,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleView
     public void onBindViewHolder( ViewHolder holder, int position) {
         User user = users.get(position);
         holder.nameOf.setText(user.getName());
-        if(!user.getProfileImage().equals("#bugFix_noProfileImage"))Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
+        if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
+            Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
     }
 
     @Override

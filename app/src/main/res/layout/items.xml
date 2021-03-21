@@ -26,7 +26,9 @@
             android:layout_height="wrap_content"
             android:ems="14"
             android:text="Name"
-            android:textSize="16sp"
+            android:fontFamily="cursive"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_marginTop="20dp"
             android:layout_alignLeft="@+id/users_pic"
             android:layout_marginLeft="90dp"/>
