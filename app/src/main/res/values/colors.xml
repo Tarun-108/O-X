@@ -6,7 +6,9 @@
     <color name="bottom_nav_color">#8434F3</color>
     <color name="Red">#E31414</color>
     <color name="link_color">#102DEC</color>
-    <color name="blog_back">#EFE7BC</color>
+    <color name="blog_back">#EDECE8</color>
+    <color name="card_color">#66D52A</color>
+    <color name="orange">#EABC16</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>

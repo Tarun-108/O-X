@@ -1,8 +1,11 @@
 package com.example.o_x;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,18 +32,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_CODE = 1080;
+    private static final int GOOGLE_REQUEST_CODE = 1802;
+    private static final int ACCESS_GALLERY_CODE = 108;
+    Uri profileImg;
     ActivityRegisterBinding binding;
 
     private FirebaseAuth Auth = FirebaseAuth.getInstance();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uID;
     private GoogleSignInClient mGoogleSignInClient;
@@ -93,6 +100,27 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //Set image to profile and requesting to access gallery
+        binding.setImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check for SDK version
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    // permission check
+                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                        requestPermissions(permissions, PERMISSION_CODE);
+                    }else{
+                        getImageFromGallery();
+                    }
+                }else{
+                    getImageFromGallery();
+                }
+            }
+        });
+
+
         //button for email password registration
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 //Registering user
                 Auth.createUserWithEmailAndPassword(binding.editTextEmailAddress.getText().toString().trim()
                         ,binding.editTextPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -151,26 +180,46 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             });
 
+
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(RegisterActivity.this,"Registration Complete", Toast.LENGTH_SHORT).show();
                             uID = Auth.getCurrentUser().getUid();
-                            DocumentReference documentReference = db.collection("users").document(uID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("Name", name);
-                            user.put("Email",email);
-                            user.put("Photo","#bugFix");
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("Pass","User's Data stored");
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("Fail", "Unable to create collection "+task.getException().getMessage());
-                                }
+
+                            // to store image on storage
+                            StorageReference reference = storage.getReference().child("Profiles").child(Auth.getUid());
+                            if(profileImg != null){
+                                reference.putFile(profileImg).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    String imageProfileUri = uri.toString();
+                                                    User userRegistering = new User(uID,name,email,imageProfileUri);
+                                                    database.getReference().child("Users").child(uID).setValue(userRegistering).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("Pass","User's Data stored");
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }else{
+                                User userRegistering = new User(uID,name,email,"#bugFix_noProfileImage");
+                                database.getReference().child("Users").child(uID).setValue(userRegistering).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Pass","User's Data stored");
+                                    }
+                                });
                             }
-                            );
+
+
+
                             if(!vUser.isEmailVerified()){
                                 Toast.makeText(RegisterActivity.this, "Please verify your email to continue", Toast.LENGTH_SHORT).show();
                                 binding.textViewTitle.setVisibility(View.VISIBLE);
@@ -191,14 +240,36 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    // to get a photo from gallery
+    private void getImageFromGallery() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,ACCESS_GALLERY_CODE);
+    }
+
+    @Override
+    // checking the result of requested permission
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == PERMISSION_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getImageFromGallery();
+            }else{
+                Toast.makeText(this, "     Permission denied \n Gallery can't be accessed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // to signIn into an account through google
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 1802);
+        startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1802){
+        if(requestCode == GOOGLE_REQUEST_CODE){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -208,8 +279,15 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("fail", error.getMessage());
             }
         }
+        if(resultCode == RESULT_OK && requestCode == ACCESS_GALLERY_CODE && data != null){
+            if(data.getData()!=null){
+                binding.profilePicRegister.setImageURI(data.getData());
+                profileImg = data.getData();
+            }
+        }
     }
 
+    // for google authentication
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         Auth.signInWithCredential(credential)
@@ -230,35 +308,25 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
+    //to save data fetched from google account of registered user
     private void saveData() {
         GoogleSignInAccount user = GoogleSignIn.getLastSignedInAccount(this);
         if (user != null) {
             String name = user.getDisplayName();
-            String Email =user.getEmail();
-            Uri picsrc = user.getPhotoUrl();
+            String email =user.getEmail();
+            String imageProfileUri = user.getPhotoUrl().toString();
             uID = Auth.getCurrentUser().getUid();
-            DocumentReference documentReference = db.collection("users").document(uID);
-            Map<String,Object> User = new HashMap<>();
-            User.put("Name", name);
-            User.put("Email",Email);
-            User.put("Photo",picsrc.toString());
-            documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
+            User userRegistering = new User(uID,name,email,imageProfileUri);
+            database.getReference().child("Users").child(uID).setValue(userRegistering).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.d("Pass","User's Data stored");
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("failToStoreData","Fail "+e.getMessage());
-                }
-                });
+            });
         }
-
-
-
     }
 
+    // requesting google for signIn
     private void request(){
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -269,9 +337,29 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    // method to hide soft keyboard
     public void hidesoftkeyboard(View view) {
 
         InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         im.hideSoftInputFromWindow(view.getWindowToken(), 0 );
     }
 }
+/*
+DocumentReference documentReference = db.collection("users").document(uID);
+                            Map<String,Object> user = new HashMap<>();
+                            user.put("Name", name);
+                            user.put("Email",email);
+                            user.put("Photo","#bugFix");
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Pass","User's Data stored");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("Fail", "Unable to create collection "+task.getException().getMessage());
+                                }
+                            }
+                            );
+ */

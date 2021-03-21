@@ -14,8 +14,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/users_pic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:src="@drawable/ic_profile_24" />
 
         <TextView
@@ -27,7 +29,7 @@
             android:textSize="16sp"
             android:layout_marginTop="20dp"
             android:layout_alignLeft="@+id/users_pic"
-            android:layout_marginLeft="110dp"/>
+            android:layout_marginLeft="90dp"/>
 
         <Button
             android:layout_width="wrap_content"

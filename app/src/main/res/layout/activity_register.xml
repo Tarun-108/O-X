@@ -9,22 +9,7 @@
     android:onClick="hidesoftkeyboard">
 
 
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=" Email verification pending "
-        android:textColor="#EF0C39"
-        android:textSize="26dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
-
-
-    <pl.droidsonroids.gif.GifImageView
+    <!--<pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="145dp"
         android:layout_height="114dp"
@@ -32,18 +17,41 @@
         android:src="@drawable/rpgif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text=" Email verification pending "
+        android:textColor="#EF0C39"
+        android:textSize="26dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicRegister"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:src="@drawable/no_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gifImageView">
+        app:layout_constraintTop_toBottomOf="@+id/profilePicRegister">
 
         <TextView
             android:id="@+id/textView2"
@@ -65,8 +73,8 @@
             android:layout_marginTop="10dp"
             android:ems="14"
             android:hint="Full Name"
-            android:textColor="@color/black"
             android:inputType="textPersonName"
+            android:textColor="@color/black"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="108dp"
             tools:layout_editor_absoluteY="350dp" />
@@ -77,10 +85,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:textColor="@color/black"
             android:ems="14"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:textColor="@color/black"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="119dp"
             tools:layout_editor_absoluteY="449dp" />
@@ -90,10 +98,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/black"
             android:ems="14"
             android:hint="Password"
             android:inputType="textPassword"
+            android:textColor="@color/black"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="113dp"
             tools:layout_editor_absoluteY="511dp" />
@@ -132,7 +140,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="          Or\n Register with"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -198,6 +206,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/setImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="152dp"
+        android:backgroundTint="#A8A8A8"
+        android:clickable="true"
+        android:tint="#A8A8A8"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.639"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#A8A8A8"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

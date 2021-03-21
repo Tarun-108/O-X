@@ -6,13 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +31,7 @@ public class ProfileFragment extends Fragment {
 
     private FirebaseAuth auth;
     private FirebaseFirestore storage;
+    private FirebaseDatabase database;
     private static String uID;
 
 
@@ -39,6 +42,7 @@ public class ProfileFragment extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseFirestore.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         uID = auth.getCurrentUser().getUid();
 
@@ -47,24 +51,24 @@ public class ProfileFragment extends Fragment {
         profilePic = (CircleImageView) view.findViewById(R.id.profilePic);
         FragmentActivity context = getActivity();
 
-        DocumentReference docRef = storage.collection("users").document(uID);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        database.getReference().child("Users").child(uID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                //User user = documentSnapshot.toObject(User.class);
-                name.setText(documentSnapshot.getString("Name"));
-                email.setText(documentSnapshot.getString("Email"));
-                picS = documentSnapshot.getString("Photo");
-                profilePic.setVisibility(View.VISIBLE);
-                if(!picS.equals("#bugFix")){
-                    Picasso.with(context).load(picS).placeholder(R.drawable.no_profile).into(profilePic);
-                }
-                //Uri picUri = Uri.parse(picS);
-                //profilePic.setImageURI(picUri);
-                //profilePic.setVisibility(View.VISIBLE);
+            public void onDataChange( DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                name.setText(user.getName());
+                email.setText(user.getEmail());
+
+                //if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
+                    Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(profilePic);
+                //else  profilePic.setImageResource(R.drawable.no_profile);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-
         return view;
     }
 

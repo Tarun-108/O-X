@@ -9,9 +9,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/blog_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="678dp"
+        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,23 +56,23 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/post_blog_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/link_color"
-                android:text="Post"/>
+                android:text="Post" />
 
             <Button
                 android:id="@+id/cancel_blog_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:backgroundTint="@color/Red"
-                android:text="Cancel"
-                android:layout_marginLeft="50dp"/>
+                android:text="Cancel" />
 
         </LinearLayout>
 
@@ -82,11 +82,14 @@
         android:id="@+id/to_write"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="What is in your mind?"
+        android:layout_gravity="bottom"
+        android:background="@color/orange"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="What's in your mind? Write here"
         android:textColor="@color/purple_500"
-        android:textSize="26sp"
-        android:background="@color/blog_back"
-        android:visibility="visible"
+        android:textSize="26dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

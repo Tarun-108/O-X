@@ -1,5 +1,6 @@
 package com.example.o_x;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +9,22 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleViewAdapter.ViewHolder> {
 
     public static final String tag = "Recycle View Adapter";
 
-    private String[] namesUsers;
-    //private Context mContext;
+    private ArrayList<User> users;
+    private Context context;
 
-    public HomeRecycleViewAdapter(String[] namesUsers) {
-        this.namesUsers = namesUsers;
-        //this.mContext = mContext;
+    public HomeRecycleViewAdapter(Context context, ArrayList<User> users) {
+        this.users = users;
+        this.context = context;
     }
 
 
@@ -32,13 +37,14 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleView
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
-        String nameX = namesUsers[position];
-        holder.nameOf.setText(nameX);
+        User user = users.get(position);
+        holder.nameOf.setText(user.getName());
+        if(!user.getProfileImage().equals("#bugFix_noProfileImage"))Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return namesUsers.length;
+        return users.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

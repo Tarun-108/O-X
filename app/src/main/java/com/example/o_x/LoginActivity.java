@@ -2,7 +2,6 @@ package com.example.o_x;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -28,11 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,7 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private String uID;
     private FirebaseFirestore db;
-    //private FirebaseDatabase database;
+
+    private FirebaseDatabase database;
 
     //fxn to check whether the user is currently logged In or not
     @Override
@@ -72,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         //Instance creation
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        //database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         //calling fxn that create request to be sent to google
         request();
@@ -214,29 +210,17 @@ public class LoginActivity extends AppCompatActivity {
         GoogleSignInAccount user = GoogleSignIn.getLastSignedInAccount(this);
         if (user != null) {
             String name = user.getDisplayName();
-            String Email =user.getEmail();
-            Uri picsrc = user.getPhotoUrl();
+            String email =user.getEmail();
+            String imageProfileUri = user.getPhotoUrl().toString();
             uID = mAuth.getCurrentUser().getUid();
-            DocumentReference documentReference = db.collection("users").document(uID);
-            Map<String,Object> User = new HashMap<>();
-            User.put("Name", name);
-            User.put("Email",Email);
-            User.put("Photo",picsrc.toString());
-            documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
+            User userRegistering = new User(uID,name,email,imageProfileUri);
+            database.getReference().child("Users").child(uID).setValue(userRegistering).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.d("Pass","User's Data stored");
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("failToStoreData","Fail "+e.getMessage());
-                }
             });
         }
-
-
-
     }
 
     //Creating request

@@ -32,7 +32,7 @@ public class BlogFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_blog, container, false);
-        FragmentActivity context =getActivity();
+        FragmentActivity context = getActivity();
         RecyclerView blogs = (RecyclerView) view.findViewById(R.id.blog_container);
         blogs.setLayoutManager(new LinearLayoutManager(context));
         String[] titles ={"1","2","3","4","5","6"};
@@ -49,6 +49,7 @@ public class BlogFragment extends Fragment {
             public void onClick(View v) {
                 to_write.setVisibility(View.GONE);
                 write.setVisibility(View.VISIBLE);
+                ((MainActivity)getActivity()).hidesoftkeyboard(v);
             }
         });
         post.setOnClickListener(new View.OnClickListener() {
@@ -56,9 +57,11 @@ public class BlogFragment extends Fragment {
             public void onClick(View v) {
                 to_write.setVisibility(View.VISIBLE);
                 write.setVisibility(View.GONE);
+                ((MainActivity)getActivity()).hidesoftkeyboard(v);
             }
         });
 
         return view;
     }
+
 }
