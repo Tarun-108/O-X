@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
         InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         im.hideSoftInputFromWindow(view.getWindowToken(), 0 );
+    }
+    public static void makeToast(View view,Context c,String text){
+        Toast.makeText(c, text, Toast.LENGTH_SHORT).show();
     }
 
 }

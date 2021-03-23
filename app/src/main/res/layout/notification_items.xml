@@ -33,15 +33,38 @@
             android:layout_alignLeft="@+id/users_pic"
             android:layout_marginLeft="90dp"/>
 
-        <Button
+        <LinearLayout
+            android:id="@+id/buttonPanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:layout_alignTop="@+id/users_name"
             android:layout_alignStart="@+id/users_name"
-            android:backgroundTint="#16CCBD"
-            android:layout_marginTop="25dp"
-            android:text="Send Request"
-            android:layout_marginStart="20dp"/>
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+            <Button
+                android:id="@+id/playAgainButton"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#52F60C"
+                android:ems="8"
+                android:text="Accept"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/quitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:backgroundTint="#E30B0B"
+                android:ems="8"
+                android:text="Reject"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,10 +23,12 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
+    public static FragmentActivity c ;
+    private FirebaseAuth Auth;
     FirebaseDatabase database;
     ArrayList<User> users;
     HomeRecycleViewAdapter HomeRecycleViewAdapter;
-
+    ProgressBar progressBar;
     public HomeFragment() {
 
     }
@@ -38,9 +42,13 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         database = FirebaseDatabase.getInstance();
+        Auth = FirebaseAuth.getInstance();
+        String uId = Auth.getCurrentUser().getUid();
         users = new ArrayList<>();
 
+        progressBar = view.findViewById(R.id.progressBar);
         FragmentActivity c = getActivity();
+
 
         HomeRecycleViewAdapter = new HomeRecycleViewAdapter(c,users);
 
@@ -54,9 +62,13 @@ public class HomeFragment extends Fragment {
                 users.clear();
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);
+                    if(user.getUid().equals(uId)){
+                        continue;
+                    }
                     users.add(user);
                 }
                 HomeRecycleViewAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
