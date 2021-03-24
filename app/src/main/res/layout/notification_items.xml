@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     app:cardCornerRadius="30dp"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,7 +14,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/users_pic"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -38,29 +38,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginStart="95dp"
             android:layout_alignTop="@+id/users_name"
-            android:layout_alignStart="@+id/users_name"
+            android:layout_alignStart="@+id/users_pic"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
 
             <Button
-                android:id="@+id/playAgainButton"
+                android:id="@+id/acceptButton"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="#52F60C"
-                android:ems="8"
+                android:ems="6"
                 android:text="Accept"
                 android:textColor="@color/black" />
 
             <Button
-                android:id="@+id/quitButton"
+                android:id="@+id/rejectButton"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:backgroundTint="#E30B0B"
-                android:ems="8"
+                android:ems="6"
                 android:text="Reject"
                 android:textColor="@color/white" />
 

@@ -55,6 +55,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange( DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
+                //System.out.println(user.getEmail());
                 name.setText(user.getName());
                 email.setText(user.getEmail());
 

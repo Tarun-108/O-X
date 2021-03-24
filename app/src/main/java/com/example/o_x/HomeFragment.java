@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    public static FragmentActivity c ;
     private FirebaseAuth Auth;
     FirebaseDatabase database;
     ArrayList<User> users;
@@ -40,7 +39,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         database = FirebaseDatabase.getInstance();
         Auth = FirebaseAuth.getInstance();
         String uId = Auth.getCurrentUser().getUid();
@@ -48,7 +46,7 @@ public class HomeFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         FragmentActivity c = getActivity();
-
+        progressBar.setVisibility(View.VISIBLE);
 
         HomeRecycleViewAdapter = new HomeRecycleViewAdapter(c,users);
 
@@ -58,7 +56,7 @@ public class HomeFragment extends Fragment {
 
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 users.clear();
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     User user = snapshot1.getValue(User.class);

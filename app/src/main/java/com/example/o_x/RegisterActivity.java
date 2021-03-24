@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -58,14 +59,11 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = Auth.getCurrentUser();
-        if(currentUser != null && currentUser.isEmailVerified()){
+        if(currentUser != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
 
-       if(currentUser != null && !currentUser.isEmailVerified()){
-          binding.textViewTitle.setVisibility(View.VISIBLE);
-        }
     }
 
     // main fxn
@@ -140,8 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(binding.editTextEmailAddress.getText().toString().trim())
-                        || binding.editTextEmailAddress.getText().toString().trim().contains("@gmail.com") != true){
+                if(TextUtils.isEmpty(binding.editTextEmailAddress.getText().toString().trim())){
                     binding.editTextEmailAddress.setError("Valid Email Required");
                     binding.progressBar.setVisibility(View.INVISIBLE);
                     return;
@@ -197,7 +194,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                 public void onSuccess(Uri uri) {
                                                     String imageProfileUri = uri.toString();
                                                     User userRegistering = new User(uID,name,email,imageProfileUri);
-                                                    database.getReference().child("Users").child(uID).setValue(userRegistering).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    database.getReference().child("Users").child(uID).setValue(userRegistering)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
                                                             Log.d("Pass","User's Data stored");
@@ -221,12 +219,15 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                             if(!vUser.isEmailVerified()){
-                                Toast.makeText(RegisterActivity.this, "Please verify your email to continue", Toast.LENGTH_SHORT).show();
-                                binding.textViewTitle.setVisibility(View.VISIBLE);
-                                return;
-                            }else{
-                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                                 finish();
+                                Toast.makeText(RegisterActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+                                //binding.textViewTitle.setVisibility(View.VISIBLE);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                        finish();
+                                    }
+                                },2000);
                             }
                         }else{
                             binding.progressBar.setVisibility(View.INVISIBLE);

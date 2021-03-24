@@ -3,6 +3,7 @@ package com.example.o_x;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -45,13 +46,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null && currentUser.isEmailVerified()){
+        if(currentUser != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
-        }
-
-        if(currentUser != null && !currentUser.isEmailVerified()){
-            binding.textViewTitle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -143,13 +140,16 @@ public class LoginActivity extends AppCompatActivity {
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this,"Logged in successfully", Toast.LENGTH_SHORT).show();
                             FirebaseUser User = mAuth.getCurrentUser();
-                            if(User.isEmailVerified()){
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                                finish();
-                            }else{
+                            if(!User.isEmailVerified()){
                                 binding.textViewTitle.setVisibility(View.VISIBLE);
-                                return;
                             }
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                    finish();
+                                }
+                            },2000);
                         }else {
                             binding.progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(LoginActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.o_x.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 // <a href='https://pngtree.com/free-backgrounds'>free background photos from pngtree.com</a>
 
@@ -23,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+    private  FirebaseAuth auth;
+    private FirebaseDatabase database;
+    private static String uID;
 
 
     @Override
@@ -30,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        auth =FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        uID = auth.getCurrentUser().getUid();
 
         BottomNavigationView bottomnav = findViewById(R.id.nav_view);
         bottomnav.setOnNavigationItemSelectedListener(navlistener);
@@ -37,6 +44,32 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
 
+
+        // to initialize the data in "Game request" child of tic-tac-toe-98945-default
+        /*database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                    User user = snapshot1.getValue(User.class);
+                    if(user.getUid().equals(uID)){
+                        continue;
+                    }
+                    NotificationHandler initialStatus = new NotificationHandler(uID ,user.getUid(),"zero");
+                    database.getReference().child("Game Request").child(uID).child(user.getUid())
+                            .setValue(initialStatus).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Log.d("Pass","initial status stored");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
 
 
     }

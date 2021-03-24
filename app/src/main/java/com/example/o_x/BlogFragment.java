@@ -13,14 +13,21 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class BlogFragment extends Fragment {
 
     // 454dp
     View view;
+
+    private FirebaseAuth Auth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = Auth.getCurrentUser();
+
     TextView to_write;
     LinearLayout write;
-    Button post;
+    Button post,cancel;
     public BlogFragment() {
 
     }
@@ -42,17 +49,22 @@ public class BlogFragment extends Fragment {
 
         to_write = (TextView) view.findViewById(R.id.to_write);
         write = (LinearLayout) view.findViewById(R.id.write_blog);
-        post = (Button) view.findViewById(R.id.cancel_blog_button);
+        cancel = (Button) view.findViewById(R.id.cancel_blog_button);
+        post = (Button) view.findViewById(R.id.post_blog_button);
 
         to_write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                to_write.setVisibility(View.GONE);
-                write.setVisibility(View.VISIBLE);
-                ((MainActivity)getActivity()).hidesoftkeyboard(v);
+                if(currentUser.isEmailVerified()){
+                    to_write.setVisibility(View.GONE);
+                    write.setVisibility(View.VISIBLE);
+                    ((MainActivity)getActivity()).hidesoftkeyboard(v);
+                }else{
+                    MainActivity.makeToast(v,context,"PlEASE VERIFY YOUR EMAIL TO USE THIS FEATURE");
+                }
             }
         });
-        post.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 to_write.setVisibility(View.VISIBLE);

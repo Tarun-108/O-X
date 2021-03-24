@@ -53,23 +53,23 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleView
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
         User user = users.get(position);
+        receiverUser = user.getUid();
+        //System.out.println(receiverUser);
         holder.nameOf.setText(user.getName());
         if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
             Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
 
         final String[] Button_Text = {"SEND REQUEST"};
 
-        database.getReference().child(senderUser).addListenerForSingleValueEvent(new ValueEventListener() {
+        // to handle Buttons
+        database.getReference().child("Game Request").child(senderUser).child(receiverUser)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                receiverUser = user.getUid();
-                System.out.println(receiverUser);
-                System.out.println(snapshot.child(receiverUser).exists());
-                System.out.println(snapshot.getChildrenCount());
-                if(snapshot.child(receiverUser).exists()){
-                    System.out.println("Yes");
-                    String request_type = (String) snapshot.child(receiverUser).child("request status").getValue();
-                    if(request_type.equals("sent")){
+                if(snapshot.exists()) {
+                    NotificationHandler buttonHandling = snapshot.getValue(NotificationHandler.class);
+                    String status = buttonHandling.getRequestType();
+                    if (status.equals("sent")) {
                         holder.request.setText("CANCEL REQUEST");
                         Button_Text[0] = "CANCEL REQUEST";
                     }
@@ -82,6 +82,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleView
             }
         });
 
+
+
         holder.request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,20 +91,35 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleView
                 MainActivity main = new MainActivity();
                 if(Button_Text[0].equals("CANCEL REQUEST")) {
                     //MainActivity.makeToast(v, context, "Request cancelled");
-                    holder.request.setText("SEND REQUEST");
-                    Button_Text[0]="SEND REQUEST";
-                    database.getReference().child("Game Request").child(senderUser).child(receiverUser).removeValue();
-                    database.getReference().child("Game Request").child(receiverUser).child(senderUser).removeValue();
-                }
-                else {
-                    //MainActivity.makeToast(v, context, "Request sent");
+
                     database.getReference().child("Game Request").child(senderUser).child(receiverUser)
-                            .child("request status").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(Task<Void> task) {
                             if(task.isSuccessful()){
                                 database.getReference().child("Game Request").child(receiverUser).child(senderUser)
-                                        .child("request status").setValue("received").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            holder.request.setText("SEND REQUEST");
+                                            Button_Text[0]="SEND REQUEST";
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+                else {
+                    //MainActivity.makeToast(v, context, "Request sent");
+                    database.getReference().child("Game Request").child(senderUser).child(receiverUser)
+                            .setValue(new NotificationHandler(senderUser,receiverUser,"sent")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(Task<Void> task) {
+                            if(task.isSuccessful()){
+                                database.getReference().child("Game Request").child(receiverUser).child(senderUser)
+                                        .setValue(new NotificationHandler(senderUser,receiverUser,"received")).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
