@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:hint="Title"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="#615B5B" />
 
         <EditText
             android:id="@+id/editTextBody"
@@ -53,7 +53,7 @@
             android:layout_height="136dp"
             android:hint="Body of blog"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="#615B5B" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
         android:fontFamily="cursive"
         android:gravity="center"
         android:padding="10dp"
-        android:text="What's in your mind? Write here"
+        android:text="Tap Here to Write."
         android:textColor="@color/purple_500"
         android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"

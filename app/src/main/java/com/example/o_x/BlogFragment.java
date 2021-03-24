@@ -1,10 +1,12 @@
 package com.example.o_x;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +30,8 @@ public class BlogFragment extends Fragment {
     TextView to_write;
     LinearLayout write;
     Button post,cancel;
+    EditText title,body;
+
     public BlogFragment() {
 
     }
@@ -51,6 +55,8 @@ public class BlogFragment extends Fragment {
         write = (LinearLayout) view.findViewById(R.id.write_blog);
         cancel = (Button) view.findViewById(R.id.cancel_blog_button);
         post = (Button) view.findViewById(R.id.post_blog_button);
+        title = (EditText) view.findViewById(R.id.editTextTitle);
+        body = (EditText) view.findViewById(R.id.editTextBody);
 
         to_write.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +65,27 @@ public class BlogFragment extends Fragment {
                     to_write.setVisibility(View.GONE);
                     write.setVisibility(View.VISIBLE);
                     ((MainActivity)getActivity()).hidesoftkeyboard(v);
+
+                    post.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            System.out.println("hi hi hi hi hi");
+                            if(TextUtils.isEmpty(title.getText())){
+                                title.setError("Title required");
+                                return;
+                            }
+                            if(TextUtils.isEmpty(body.getText())){
+                                body.setError("Body required");
+                                return;
+                            }
+                        }
+                    });
+
+
+
+
+
+
                 }else{
                     MainActivity.makeToast(v,context,"PlEASE VERIFY YOUR EMAIL TO USE THIS FEATURE");
                 }

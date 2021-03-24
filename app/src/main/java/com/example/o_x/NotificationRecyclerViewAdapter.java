@@ -1,6 +1,7 @@
 package com.example.o_x;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,9 +60,12 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
             @Override
             public void onDataChange( DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                holder.name.setText(user.getName());
-                if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
-                Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
+                if(snapshot.exists()){
+                    holder.name.setText(user.getName());
+                    if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
+                        Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
+                }
+
                 //else  profilePic.setImageResource(R.drawable.no_profile);
             }
             @Override
@@ -68,6 +74,28 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
             }
         });
 
+        holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.getReference().child("Game Request").child(uId).child(senderUser)
+                        .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        if(task.isSuccessful()){
+                            database.getReference().child("Game Request").child(senderUser).child(uId)
+                                    .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Log.d("tag","cancelled");
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
 
     }
 
