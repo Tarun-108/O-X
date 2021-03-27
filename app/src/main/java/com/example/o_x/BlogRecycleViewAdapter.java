@@ -1,5 +1,6 @@
 package com.example.o_x;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,14 +8,16 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class BlogRecycleViewAdapter extends RecyclerView.Adapter<BlogRecycleViewAdapter.ViewHolder> {
 
-    private String[] titles,bodies,writers;
+    private ArrayList<Blog> blogStored = new ArrayList<>();
+    private Context context;
 
-    public BlogRecycleViewAdapter(String[] titles, String[] bodies, String[] writers) {
-        this.titles = titles;
-        this.bodies = bodies;
-        this.writers = writers;
+    public BlogRecycleViewAdapter(Context context, ArrayList<Blog> blogStored) {
+        this.context = context;
+        this.blogStored = blogStored;
     }
 
 
@@ -27,18 +30,15 @@ public class BlogRecycleViewAdapter extends RecyclerView.Adapter<BlogRecycleView
 
     @Override
     public void onBindViewHolder(BlogRecycleViewAdapter.ViewHolder holder, int position) {
-        String title,body,writer;
-        title = titles[position];
-        body = bodies[position];
-        writer = writers[position];
-        holder.ftitle.setText(title);
-        holder.fbody.setText(body);
-        holder.fwriter.setText(writer);
+        Blog blogstored = blogStored.get(position);
+        holder.ftitle.setText(blogstored.getTitle());
+        holder.fbody.setText(blogstored.getBody());
+        holder.fwriter.setText("- "+blogstored.getWriter());
     }
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return blogStored.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -56,7 +56,8 @@ public class ProfileFragment extends Fragment {
             public void onDataChange( DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 //System.out.println(user.getEmail());
-                name.setText(user.getName());
+                String username = user.getName();
+                name.setText(username);
                 email.setText(user.getEmail());
 
                 //if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
@@ -70,6 +71,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
 
 
 

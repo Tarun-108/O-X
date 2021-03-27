@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         Toast.makeText(MainActivity.this, "You are logged out", Toast.LENGTH_SHORT).show();
         FirebaseAuth.getInstance().signOut();
-
     }
     public void hidesoftkeyboard(View view) {
 
