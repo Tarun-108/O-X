@@ -74,6 +74,50 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
             }
         });
 
+        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*database.getReference().child("Game").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                            if(snapshot1.getKey().contains(senderUser)){
+                                MainActivity.makeToast(v,context,"User playing another game");
+                                return;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });*/
+                database.getReference().child("Game Request").child(senderUser).child(uId)
+                        .setValue(new NotificationHandler(senderUser,uId,"your request accepted")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        if(task.isSuccessful()){
+                            database.getReference().child("Game Request").child(uId).child(senderUser)
+                                    .setValue(new NotificationHandler(senderUser,uId,"you accepted request")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Game data = new Game(senderUser,uId,"o","x");
+                                        database.getReference().child("Game").child(senderUser+" "+uId).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
         holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
