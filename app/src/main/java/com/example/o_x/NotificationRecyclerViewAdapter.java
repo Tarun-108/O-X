@@ -77,13 +77,15 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*database.getReference().child("Game").addValueEventListener(new ValueEventListener() {
+                database.getReference().child("Game").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                            if(snapshot1.getKey().contains(senderUser)){
-                                MainActivity.makeToast(v,context,"User playing another game");
-                                return;
+                        if(snapshot.exists()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                if (snapshot1.getKey().contains(senderUser)) {
+                                    MainActivity.makeToast(v, context, "User playing another game");
+                                    return;
+                                }
                             }
                         }
                     }
@@ -92,7 +94,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });*/
+                });
                 database.getReference().child("Game Request").child(senderUser).child(uId)
                         .setValue(new NotificationHandler(senderUser,uId,"your request accepted")).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -107,6 +109,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                                         database.getReference().child("Game").child(senderUser+" "+uId).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
+                                                 Log.d("Game","Room created");
                                             }
                                         });
                                     }

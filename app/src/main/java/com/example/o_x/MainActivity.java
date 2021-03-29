@@ -3,6 +3,7 @@ package com.example.o_x;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,7 +16,10 @@ import androidx.fragment.app.Fragment;
 import com.example.o_x.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 // <a href='https://pngtree.com/free-backgrounds'>free background photos from pngtree.com</a>
 
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private  FirebaseAuth auth;
     private FirebaseDatabase database;
     private static String uID;
+
 
 
     @Override
@@ -45,35 +50,45 @@ public class MainActivity extends AppCompatActivity {
                 new HomeFragment()).commit();
 
 
-        // to initialize the data in "Game request" child of tic-tac-toe-98945-default
-        /*database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                    User user = snapshot1.getValue(User.class);
-                    if(user.getUid().equals(uID)){
-                        continue;
-                    }
-                    NotificationHandler initialStatus = new NotificationHandler(uID ,user.getUid(),"zero");
-                    database.getReference().child("Game Request").child(uID).child(user.getUid())
-                            .setValue(initialStatus).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Log.d("Pass","initial status stored");
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-
     }
+    final boolean keepRunning = true;
+    Handler handler = new Handler();
+    Runnable runnable;
 
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, 1000);
+                database.getReference().child("Game Request").child(uID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                NotificationHandler request_type = snapshot1.getValue(NotificationHandler.class);
+                                String request = request_type.getRequestType();
+                                if (request.equals("your request accepted") || request.equals("you accepted request")) {
+                                    startActivity(new Intent(getApplicationContext(), GameActivity.class));
+                                    finish();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }, 1000);
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable); //stop handler when activity not visible
+        super.onPause();
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navlistener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
