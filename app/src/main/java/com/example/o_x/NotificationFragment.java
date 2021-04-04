@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ public class NotificationFragment extends Fragment {
     ArrayList<NotificationHandler> notifications;
     NotificationRecyclerViewAdapter notificationRecyclerViewAdapter;
     ProgressBar progressBar;
+    TextView no_notification;
 
     public NotificationFragment() {
 
@@ -46,6 +48,7 @@ public class NotificationFragment extends Fragment {
         notifications = new ArrayList<>();
 
         progressBar = view.findViewById(R.id.progressBar);
+        no_notification = view.findViewById(R.id.no_notification);
         FragmentActivity context = getActivity();
         progressBar.setVisibility(View.VISIBLE);
         
@@ -60,6 +63,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 notifications.clear();
+                System.out.println(snapshot.exists());
                 if(snapshot.exists()){
                     for(DataSnapshot snapshot1 : snapshot.getChildren()){
                         NotificationHandler notification = snapshot1.getValue(NotificationHandler.class);
@@ -70,6 +74,9 @@ public class NotificationFragment extends Fragment {
                     }
                 }
                 notificationRecyclerViewAdapter.notifyDataSetChanged();
+                if(notifications.size() == 0){
+                    no_notification.setVisibility(View.VISIBLE);
+                }else no_notification.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
             }
 

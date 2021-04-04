@@ -65,7 +65,6 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                     if(!user.getProfileImage().equals("#bugFix_noProfileImage"))
                         Picasso.with(context).load(user.getProfileImage()).placeholder(R.drawable.no_profile).into(holder.image);
                 }
-
                 //else  profilePic.setImageResource(R.drawable.no_profile);
             }
             @Override
@@ -104,7 +103,6 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                                     .setValue(new NotificationHandler(senderUser,uId,"you accepted request")).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
                                         Game data = new Game(senderUser,uId,"o","x");
                                         database.getReference().child("Game").child(senderUser+" "+uId).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -112,7 +110,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                                                  Log.d("Game","Room created");
                                             }
                                         });
-                                    }
+
                                 }
                             });
                         }

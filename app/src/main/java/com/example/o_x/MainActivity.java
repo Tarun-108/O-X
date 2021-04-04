@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.o_x.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
 
-    ActivityMainBinding binding;
 
     private  FirebaseAuth auth;
     private FirebaseDatabase database;
@@ -68,7 +66,12 @@ public class MainActivity extends AppCompatActivity {
                                 NotificationHandler request_type = snapshot1.getValue(NotificationHandler.class);
                                 String request = request_type.getRequestType();
                                 if (request.equals("your request accepted") || request.equals("you accepted request")) {
-                                    startActivity(new Intent(getApplicationContext(), GameActivity.class));
+                                    Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                                   // intent.putExtra("GameId",request_type.getSenderUser()+" "+request_type.getReceiverUser());
+                                    //System.out.println(request_type.getSenderUser()+" "+request_type.getReceiverUser());
+                                    //if(request.equals("your request accepted")) intent.putExtra("player1",request_type.getReceiverUser());
+                                    //if (request.equals("you accepted request")) intent.putExtra("player1",request_type.getSenderUser());
+                                    startActivity(intent);
                                     finish();
                                 }
                             }

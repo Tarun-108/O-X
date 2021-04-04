@@ -2,15 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
-    app:cardCornerRadius="30dp"
+    app:cardCornerRadius="15dp"
     android:layout_margin="5dp"
+    android:backgroundTint="#33A9F680"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#66D52A">
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/users_pic"
@@ -18,7 +18,7 @@
             android:layout_marginStart="20dp"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/ic_profile_24" />
+            android:src="@drawable/no_profile" />
 
         <TextView
             android:id="@+id/users_name"
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:ems="14"
             android:text="Name"
+            android:textColor="@color/white"
             android:fontFamily="cursive"
             android:textStyle="bold"
             android:textSize="20sp"
@@ -38,13 +39,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginStart="95dp"
+            android:layout_marginStart="90dp"
+            android:layout_marginBottom="10dp"
             android:layout_alignTop="@+id/users_name"
             android:layout_alignStart="@+id/users_pic"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+            app:layout_constraintStart_toStartOf="parent">
 
             <Button
                 android:id="@+id/acceptButton"
