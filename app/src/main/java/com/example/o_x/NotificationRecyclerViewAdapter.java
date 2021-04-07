@@ -76,7 +76,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database.getReference().child("Game").addValueEventListener(new ValueEventListener() {
+                database.getReference().child("Game").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
@@ -103,13 +103,9 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                                     .setValue(new NotificationHandler(senderUser,uId,"you accepted request")).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                        Game data = new Game(senderUser,uId,"o","x");
-                                        database.getReference().child("Game").child(senderUser+" "+uId).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                 Log.d("Game","Room created");
-                                            }
-                                        });
+                                        if(task.isSuccessful()){
+                                            Log.d("success", "game");
+                                        }
 
                                 }
                             });

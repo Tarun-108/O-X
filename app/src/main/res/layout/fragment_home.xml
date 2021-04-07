@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="Send request to others and play tic-tac-toe with them"
         android:textColor="@color/orange"
         android:textSize="30dp"

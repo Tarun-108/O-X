@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -66,13 +69,25 @@ public class MainActivity extends AppCompatActivity {
                                 NotificationHandler request_type = snapshot1.getValue(NotificationHandler.class);
                                 String request = request_type.getRequestType();
                                 if (request.equals("your request accepted") || request.equals("you accepted request")) {
-                                    Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                   // intent.putExtra("GameId",request_type.getSenderUser()+" "+request_type.getReceiverUser());
+                                    Game data = new Game(request_type.getSenderUser(),request_type.getReceiverUser(),"x","o");
+                                    database.getReference().child("Game").child(request_type.getSenderUser()+" "+request_type.getReceiverUser())
+                                            .setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                                                intent.putExtra("GameId",request_type.getSenderUser()+" "+request_type.getReceiverUser());
+                                                intent.putExtra("turn",request_type.getSenderUser());
+                                                if(request.equals("your request accepted")) intent.putExtra("player1",request_type.getReceiverUser());
+                                                if (request.equals("you accepted request")) intent.putExtra("player1",request_type.getSenderUser());
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                            Log.d("Game","Room created");
+                                        }
+                                    });
                                     //System.out.println(request_type.getSenderUser()+" "+request_type.getReceiverUser());
-                                    //if(request.equals("your request accepted")) intent.putExtra("player1",request_type.getReceiverUser());
-                                    //if (request.equals("you accepted request")) intent.putExtra("player1",request_type.getSenderUser());
-                                    startActivity(intent);
-                                    finish();
+
                                 }
                             }
                         }
