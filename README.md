@@ -1,2 +1,2 @@
 # O-X
-This is an most played game Tic Tac Toe an android application to play online with friends and share thoughts on blog section.
+In this project we build online Tic Tac Toe game to play online with friends.And you can also chat and share your opinions.
